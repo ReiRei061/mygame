@@ -7,27 +7,26 @@ project(mygame CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 1. DILE A CMAKE DÓNDE DESCOMPRIMISTE SFML
-# Asegúrate de que esta ruta coincida exactamente con el lugar donde guardaste SFML
+# 1. RUTA DE SFML (Tu versión actual de 64 bits)
 set(SFML_DIR "C:/SFML-2.6.1/lib/cmake/SFML")
 
-# 2. Buscar los componentes de SFML que vamos a usar
+# 2. Buscar los componentes de SFML
 find_package(SFML 2.6 COMPONENTS graphics window system audio REQUIRED)
 
-# 3. Buscar automáticamente todos los archivos .cpp dentro de la carpeta src/
+# 3. Buscar archivos fuentes
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
-# 4. Definir el ejecutable final con el nombre de tu proyecto
+# 4. Definir el ejecutable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# 5. Indicarle a CMake dónde buscar tus archivos de cabecera (.hpp)
+# 5. Indicar la carpeta de cabeceras (.hpp)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
 
-# 6. Enlazar las librerías de SFML con tu juego
+# 6. ENLAZAR CON LOS OBJETIVOS OFICIALES DE SFML
+# Usar los objetivos importados remedia los errores de "símbolos sin resolver" en MSVC
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 
-# 7. TRUCO DE WINDOWS: Copiar los archivos .dll automáticamente al compilar
-# Esto evita el molesto error de "falta sfml-graphics-2.dll" al ejecutar el juego
+# 7. Copiar los archivos .dll automáticamente al compilar
 if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
