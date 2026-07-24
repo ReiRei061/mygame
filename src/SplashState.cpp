@@ -9,11 +9,11 @@
 SplashState::SplashState(StateManager& stateManager, TextureManager& textureManager, FontManager& fontManager)
     : m_stateManager(stateManager), m_textureManager(textureManager), m_fontManager(fontManager) {
 
-    // 💡 Ruta hacia tu logo (ajusta la extensión .png si es .jpg)
+    // Ruta hacia tu logo (ajusta la extensión .png si es .jpg)
     m_textureManager.loadTexture("logo", "assets/logos/logo01.png");
     
     // Carga de la fuente para el mensaje de saltar
-    m_fontManager.loadFont("main_font", "assets/fonts/arial.ttf");
+    m_fontManager.loadFont("main_font", "assets/fonts/OpticLatin.ttf");
 
     // Configurar Sprite del Logo
     if (m_textureManager.hasTexture("logo")) {

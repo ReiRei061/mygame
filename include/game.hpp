@@ -1,23 +1,40 @@
 #ifndef GAME_HPP
 #define GAME_HPP
+
 #include <SFML/Graphics.hpp>
+#include <iostream>
+#include "StateManager.hpp"
+#include "TextureManager.hpp"
+#include "FontManager.hpp"
+#include "AudioManager.hpp"
 
 class Game {
-private:
-    // Propiedades de la ventana y lógica
-    sf::RenderWindow m_window;
-    bool m_isRunning;
+public:
+    Game();
+    ~Game() = default;
 
-    // Métodos privados del ciclo de juego (Game Loop)
+    // Deshabilitar copia
+    Game(const Game&) = delete;
+    Game& operator=(const Game&) = delete;
+
+    // Método principal para iniciar el bucle de juego
+    void run();
+
+private:
     void processEvents();
     void update(float dt);
     void render();
 
-public:
-    Game();  // Constructor: Configura la ventana
-    ~Game(); // Destructor: Limpia recursos si es necesario
+    sf::RenderWindow m_window;
+    sf::Clock m_clock;
 
-    void run(); // Arranca el bucle principal
+    // Gestores de recursos
+    TextureManager m_textureManager;
+    FontManager m_fontManager;
+    AudioManager m_audioManager;
+
+    // Gestor de estados
+    StateManager m_stateManager;
 };
 
-#endif
+#endif // GAME_HPP
