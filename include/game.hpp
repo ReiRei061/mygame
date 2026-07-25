@@ -24,8 +24,13 @@ private:
     void processEvents();
     void update(float dt);
     void render();
+    void toggleFullscreen();
+    void updateView(float windowWidth, float windowHeight);
 
     sf::RenderWindow m_window;
+    sf::View m_gameView;
+    bool m_isFullscreen{ true };
+
     sf::Clock m_clock;
 
     // Gestores de recursos
