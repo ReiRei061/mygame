@@ -1,9 +1,5 @@
-#include "SplashState.hpp"
-#include "MainMenuState.hpp" // Lo incluimos para poder hacer la transición
-#include <algorithm>
-
-#include "SplashState.hpp"
-#include "MainMenuState.hpp"
+#include "states/SplashState.hpp"
+#include "states/MainMenuState.hpp" // Lo incluimos para poder hacer la transición
 #include <algorithm>
 
 SplashState::SplashState(StateManager& stateManager, TextureManager& textureManager, FontManager& fontManager)

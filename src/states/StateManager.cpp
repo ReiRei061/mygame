@@ -1,4 +1,4 @@
-#include "StateManager.hpp"
+#include "states/StateManager.hpp"
 
 // Registra la intención de reemplazar el estado actual por uno nuevo
 void StateManager::changeState(std::unique_ptr<State> newState) {

@@ -13,25 +13,21 @@ set(SFML_DIR "C:/SFML-2.6.1/lib/cmake/SFML")
 # 2. Buscar los componentes de SFML
 find_package(SFML 2.6 COMPONENTS graphics window system audio REQUIRED)
 
-# 3. Buscar archivos fuentes
-set(SOURCES
-    src/main.cpp
-    src/Game.cpp
-    src/StateManager.cpp
-    src/EventBus.cpp
-    src/Button.cpp
-    src/TextureManager.cpp
-    src/FontManager.cpp
-    src/AudioManager.cpp
-    src/SplashState.cpp
-    src/MainMenuState.cpp
-)
+# 3. Buscar automáticamente todos los archivos fuente (.cpp) dentro de src/ y sus subcarpetas
+file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # 4. Definir el ejecutable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# 5. Indicar la carpeta de cabeceras (.hpp)
-target_include_directories(${PROJECT_NAME} PRIVATE include)
+# 5. Indicar las carpetas de cabeceras (.hpp)
+target_include_directories(${PROJECT_NAME} PRIVATE 
+    include
+    include/core
+    include/states
+    include/ui
+    include/animation
+    include/entities
+)
 
 # 6. ENLAZAR CON LOS OBJETIVOS OFICIALES DE SFML
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)

@@ -1,4 +1,4 @@
-#include "MainMenuState.hpp"
+#include "states/MainMenuState.hpp"
 #include <iostream>
 
 MainMenuState::MainMenuState(StateManager& stateManager, TextureManager& textureManager, FontManager& fontManager)

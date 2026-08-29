@@ -1,5 +1,5 @@
-#include "Game.hpp"
-#include "SplashState.hpp"
+#include "core/Game.hpp"
+#include "states/SplashState.hpp"
 
 Game::Game()
     : m_window(sf::VideoMode::getDesktopMode(), "My Game", sf::Style::Fullscreen) {
