@@ -7,6 +7,16 @@ project(mygame CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# ------------------------------------------------------------------------------
+# Descarga automática de nlohmann/json
+# ------------------------------------------------------------------------------
+include(FetchContent)
+FetchContent_Declare(
+    json
+    URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+FetchContent_MakeAvailable(json)
+
 # 1. RUTA DE SFML
 set(SFML_DIR "C:/SFML-2.6.1/lib/cmake/SFML")
 
@@ -29,8 +39,14 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     include/entities
 )
 
-# 6. ENLAZAR CON LOS OBJETIVOS OFICIALES DE SFML
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+# 6. ENLAZAR CON LOS OBJETIVOS OFICIALES DE SFML Y JSON
+target_link_libraries(${PROJECT_NAME} PRIVATE 
+    sfml-graphics 
+    sfml-window 
+    sfml-system 
+    sfml-audio
+    nlohmann_json::nlohmann_json
+)
 
 # 7. COPIAR RECURSOS (assets) AL COMPILAR
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
@@ -39,7 +55,13 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     "$<TARGET_FILE_DIR:${PROJECT_NAME}>/assets"
 )
 
-# 8. COPIAR DLLs DE SFML EN WINDOWS
+# 8. CREAR CARPETA DE SAVES EN EL DIRECTORIO DE SALIDA
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+    "$<TARGET_FILE_DIR:${PROJECT_NAME}>/saves"
+)
+
+# 9. COPIAR DLLs DE SFML EN WINDOWS
 if(WIN32)
     add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory

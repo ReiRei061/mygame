@@ -1,4 +1,5 @@
 #include "states/MainMenuState.hpp"
+#include "states/SelectSlotState.hpp"
 #include <iostream>
 
 MainMenuState::MainMenuState(StateManager& stateManager, TextureManager& textureManager, FontManager& fontManager)
@@ -8,12 +9,28 @@ MainMenuState::MainMenuState(StateManager& stateManager, TextureManager& texture
 }
 
 void MainMenuState::initUI() {
-    // Título del Juego
+
+    // Fondo del juego
+    m_textureManager.loadTexture("main_menu_bg", "assets/menus/menu01.png");
+
+    m_backgroundSprite.setTexture(m_textureManager.getTexture("main_menu_bg"));
+
+    sf::Vector2u textureSize = m_backgroundSprite.getTexture()->getSize();
+    m_backgroundSprite.setScale(
+        800.0f / static_cast<float>(textureSize.x),
+        600.0f / static_cast<float>(textureSize.y)
+    );
+
+    // Título del Juego (Ajustado a la paleta del bosque/atardecer)
     if (m_fontManager.hasFont("main_font")) {
         m_titleText.setFont(m_fontManager.getFont("main_font"));
         m_titleText.setString("MY GAME");
         m_titleText.setCharacterSize(48);
-        m_titleText.setFillColor(sf::Color::White);
+        
+        // Color dorado/crema cálido con borde oscuro para destacar sobre las copas del bosque
+        m_titleText.setFillColor(sf::Color(255, 235, 180));
+        m_titleText.setOutlineColor(sf::Color(35, 25, 15, 220));
+        m_titleText.setOutlineThickness(3.0f);
 
         sf::FloatRect bounds = m_titleText.getLocalBounds();
         m_titleText.setOrigin(bounds.width / 2.0f, bounds.height / 2.0f);
@@ -22,13 +39,12 @@ void MainMenuState::initUI() {
 
     const sf::Font& font = m_fontManager.getFont("main_font");
 
-    // Botón: JUGAR
+    // Botón: JUGAR (Abre la selección de slots manteniendo MainMenuState debajo)
     m_buttons.push_back(std::make_unique<Button>(
         sf::Vector2f(300.0f, 240.0f), sf::Vector2f(200.0f, 50.0f),
         font, "JUGAR", 22,
-        []() {
-            std::cout << "[INFO] Iniciar juego presionado!\n";
-            // Aquí luego cambiaremos a PlayState
+        [this]() {
+            m_stateManager.pushState(std::make_unique<SelectSlotState>(m_stateManager, m_textureManager, m_fontManager));
         }
     ));
 
@@ -46,28 +62,30 @@ void MainMenuState::initUI() {
         sf::Vector2f(300.0f, 380.0f), sf::Vector2f(200.0f, 50.0f),
         font, "SALIR", 22,
         [this]() {
-            // Elimina los estados para salir de la pila limpiamente
             m_stateManager.popState();
         }
     ));
 }
 
 void MainMenuState::handleInput(const sf::Event& event, const sf::RenderWindow& window) {
-    // Cada botón procesa el clic usando las coordenadas reales de la ventana
     for (auto& button : m_buttons) {
         button->handleEvent(event, window);
     }
 }
 
 void MainMenuState::update(float dt) {
-    // Lógica adicional de animación del menú
 }
 
 void MainMenuState::render(sf::RenderWindow& window) {
     window.clear(sf::Color(20, 20, 30));
 
+    // Dibujar el fondo
+    window.draw(m_backgroundSprite);
+
+    // Dibujar el título
     window.draw(m_titleText);
 
+    // Dibujar los botones
     for (auto& button : m_buttons) {
         button->render(window);
     }

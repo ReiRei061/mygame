@@ -26,6 +26,8 @@ private:
     sf::Text m_titleText;
     std::vector<std::unique_ptr<Button>> m_buttons;
 
+    sf::Sprite m_backgroundSprite;
+    
     void initUI();
 };
 
