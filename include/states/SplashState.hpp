@@ -5,11 +5,13 @@
 #include "StateManager.hpp"
 #include "TextureManager.hpp"
 #include "FontManager.hpp"
+#include "AudioManager.hpp"
 #include <SFML/Graphics.hpp>
 
 class SplashState : public State {
 public:
-    SplashState(StateManager& stateManager, TextureManager& textureManager, FontManager& fontManager);
+    SplashState(StateManager& stateManager, TextureManager& textureManager, 
+                FontManager& fontManager, AudioManager& audioManager, sf::RenderWindow& window);
     ~SplashState() override = default;
 
     void handleInput(const sf::Event& event, const sf::RenderWindow& window) override;
@@ -20,6 +22,8 @@ private:
     StateManager& m_stateManager;
     TextureManager& m_textureManager;
     FontManager& m_fontManager;
+    AudioManager& m_audioManager;
+    sf::RenderWindow& m_window;
 
     sf::Sprite m_logoSprite;
     sf::Text m_skipText;

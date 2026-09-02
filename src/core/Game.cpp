@@ -13,8 +13,14 @@ Game::Game()
     // 2. Ajustar el Viewport a la resolución real del monitor para calcular barras negras
     updateView(static_cast<float>(m_window.getSize().x), static_cast<float>(m_window.getSize().y));
 
-    // 3. Cargar el primer estado
-    m_stateManager.changeState(std::make_unique<SplashState>(m_stateManager, m_textureManager, m_fontManager));
+    // 3. Cargar el primer estado pasando los 5 argumentos requeridos
+    m_stateManager.changeState(std::make_unique<SplashState>(
+        m_stateManager, 
+        m_textureManager, 
+        m_fontManager, 
+        m_audioManager, 
+        m_window
+    ));
 }
 
 void Game::run() {
@@ -91,7 +97,6 @@ void Game::toggleFullscreen() {
     updateView(static_cast<float>(m_window.getSize().x), static_cast<float>(m_window.getSize().y));
 }
 
-// AQUÍ ESTABA LA FUNCIÓN QUE FALTABA
 void Game::update(float dt) {
     m_stateManager.update(dt);
 }

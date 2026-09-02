@@ -1,11 +1,13 @@
 #include "states/SplashState.hpp"
-#include "states/MainMenuState.hpp" // Lo incluimos para poder hacer la transición
+#include "states/MainMenuState.hpp" // Transición directa a MainMenuState
 #include <algorithm>
 
-SplashState::SplashState(StateManager& stateManager, TextureManager& textureManager, FontManager& fontManager)
-    : m_stateManager(stateManager), m_textureManager(textureManager), m_fontManager(fontManager) {
+SplashState::SplashState(StateManager& stateManager, TextureManager& textureManager, 
+                         FontManager& fontManager, AudioManager& audioManager, sf::RenderWindow& window)
+    : m_stateManager(stateManager), m_textureManager(textureManager), 
+      m_fontManager(fontManager), m_audioManager(audioManager), m_window(window) {
 
-    // Ruta hacia tu logo (ajusta la extensión .png si es .jpg)
+    // Ruta hacia tu logo
     m_textureManager.loadTexture("logo", "assets/logos/logo01.png");
     
     // Carga de la fuente para el mensaje de saltar
@@ -64,11 +66,17 @@ void SplashState::update(float dt) {
 }
 
 void SplashState::render(sf::RenderWindow& window) {
-    window.clear(sf::Color(10, 10, 15)); // Fondo oscuro elegatne
+    window.clear(sf::Color(10, 10, 15)); // Fondo oscuro elegante
     window.draw(m_logoSprite);
     window.draw(m_skipText);
 }
 
 void SplashState::goToMainMenu() {
-    m_stateManager.changeState(std::make_unique<MainMenuState>(m_stateManager, m_textureManager, m_fontManager));
+    m_stateManager.changeState(std::make_unique<MainMenuState>(
+        m_stateManager, 
+        m_textureManager, 
+        m_fontManager, 
+        m_audioManager, 
+        m_window
+    ));
 }
