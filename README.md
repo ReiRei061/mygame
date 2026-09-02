@@ -1,6 +1,11 @@
 # MyGame 🎮
 
-Un videojuego de rol/aventura en 2D desarrollado en **C++** utilizando **SFML 2.6.1**, con una arquitectura orientada a estados (*State Pattern*), gestión centralizada de recursos, renderizado de mapas y un sistema de almacenamiento persistente.
+![C++ Version](https://img.shields.io/badge/C%2B%2B-17-blue.svg)
+![SFML Version](https://img.shields.io/badge/SFML-2.6.1-green.svg)
+![Build System](https://img.shields.io/badge/CMake-3.16%2B-red.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey.svg)
+
+Un videojuego de rol/aventura en 2D desarrollado en C++ utilizando **SFML 2.6.1**, con una arquitectura orientada a estados (*State Pattern*), gestión centralizada de recursos, renderizado de mapas y un sistema de almacenamiento persistente.
 
 ---
 
@@ -16,16 +21,16 @@ Un videojuego de rol/aventura en 2D desarrollado en **C++** utilizando **SFML 2.
 
 ## 💻 Requisitos del Sistema
 
-* **Sistema Operativo:** Windows 10/11 (64-bit).
-* **Compilador C++:** Compatible con C++17 o superior (MSVC 2022 recommended).
-* **Herramientas de Construcción:** CMake 3.16+ y Make (opcional).
-* **Librerías Externas:**
-  * **SFML 2.6.1** (64-bit) instalada en `C:\SFML-2.6.1`.
-  * **nlohmann/json** (descargada e integrada automáticamente por CMake vía `FetchContent`).
+| Componente | Requisito recomendado |
+| :--- | :--- |
+| **Sistema Operativo** | Windows 10/11 (64-bit) |
+| **Compilador C++** | Compatible con C++17 o superior (MSVC 2022 recomendado) |
+| **Construcción** | CMake 3.16+ y Make (opcional) |
+| **Bibliotecas Externas** | SFML 2.6.1 (64-bit) instalada en `C:\SFML-2.6.1`<br>`nlohmann/json` (descargada e integrada por CMake vía FetchContent) |
 
 ---
 
-## 📂 Estructura del Repositorio (`https://github.com/ReiRei061/mygame.git`)
+## 📂 Estructura del Repositorio
 
 ```text
 mygame/
@@ -39,9 +44,7 @@ mygame/
 ├── saves/                  # Directorio para archivos JSON de guardado (Slot_1.json, etc.)
 ├── CMakeLists.txt          # Configuración del sistema de compilación CMake
 └── Makefile                # Script de automatización de comandos
-
 ⚙️ Instalación, Compilación y Ejecución
-
 1. Verificación de SFML
 Asegúrate de que la librería SFML 2.6.1 de 64 bits esté ubicada exactamente en la raíz de tu disco C: con la siguiente estructura:
 
@@ -50,12 +53,10 @@ C:\SFML-2.6.1\
 ├── bin/       # Contiene las DLLs (sfml-graphics-2.dll, sfml-window-2.dll, etc.)
 ├── include/   # Cabeceras (.hpp)
 └── lib/       # Archivos de biblioteca (.lib) y cmake/SFML
-
 2. Clonar el Repositorio
 PowerShell
 git clone [https://github.com/ReiRei061/mygame.git](https://github.com/ReiRei061/mygame.git)
 cd mygame
-
 3. Configurar y Compilar el Proyecto
 Desde la raíz del proyecto, ejecuta en la terminal (PowerShell o CMD):
 
@@ -75,8 +76,7 @@ Ve a C:\SFML-2.6.1\bin\ y copia todos los archivos .dll.
 Pégalos dentro de la carpeta build\Debug\ (o dentro de build\ según tu generador de CMake).
 
 5. Ejecutar el Juego
-
+PowerShell
 .\build\Debug\mygame.exe
-
 👥 Créditos
 Desarrollado por Reinier Manrique como un proyecto personal de videojuego en C++ utilizando SFML.
