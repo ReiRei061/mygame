@@ -1,4 +1,5 @@
 #include "states/SelectDifficultyState.hpp"
+#include "states/SelectSlotState.hpp"
 #include "states/PlayState.hpp"
 #include <iostream>
 
@@ -19,7 +20,7 @@ void SelectDifficultyState::startWithDifficulty(const std::string& difficulty) {
         m_fontManager, 
         m_audioManager, 
         m_window,
-        m_selectedSlot, // <-- ENVIAMOS EL SLOT ("Slot_1", etc.) 
+        m_selectedSlot, // Slot seleccionado ("Slot_1", etc.)
         difficulty
     ));
 }
@@ -59,11 +60,15 @@ void SelectDifficultyState::initUI() {
         [this]() { startWithDifficulty("Dificil"); }
     ));
 
-    // Botón VOLVER
+    // Botón VOLVER (Redirige de forma explícita a SelectSlotState)
     m_buttons.push_back(std::make_unique<Button>(
         sf::Vector2f(300.0f, 440.0f), sf::Vector2f(200.0f, 45.0f),
         font, "VOLVER", 18,
-        [this]() { m_stateManager.popState(); }
+        [this]() {
+            m_stateManager.changeState(std::make_unique<SelectSlotState>(
+                m_stateManager, m_textureManager, m_fontManager, m_audioManager, m_window
+            ));
+        }
     ));
 }
 

@@ -13,7 +13,7 @@ MainMenuState::MainMenuState(StateManager& stateManager, TextureManager& texture
 
 void MainMenuState::initUI() {
 
-    // Fondo del juego
+    // Fondo del menú principal
     m_textureManager.loadTexture("main_menu_bg", "assets/menus/menu01.png");
     m_backgroundSprite.setTexture(m_textureManager.getTexture("main_menu_bg"));
 
@@ -50,7 +50,8 @@ void MainMenuState::initUI() {
             ));
         }
     ));
-    // Botón: OPCIONES (Apila el nuevo OptionsMenuState)
+
+    // Botón: OPCIONES
     m_buttons.push_back(std::make_unique<Button>(
         sf::Vector2f(300.0f, 310.0f), sf::Vector2f(200.0f, 50.0f),
         font, "OPCIONES", 22,

@@ -28,12 +28,19 @@ private:
     FontManager& m_fontManager;
     AudioManager& m_audioManager;
     sf::RenderWindow& m_window;
+    sf::Sprite m_backgroundSprite;
 
     const sf::Font& m_font;
     bool m_needsRefresh{ false };
 
     std::vector<std::unique_ptr<Button>> m_buttons;
     std::vector<std::unique_ptr<Button>> m_deleteButtons;
+
+    // Control del modal de confirmación de borrado
+    int m_slotToDelete{ -1 }; // -1 indica que no hay ningún modal activo
+    sf::Text m_confirmText;
+    std::vector<std::unique_ptr<Button>> m_confirmButtons;
+    sf::RectangleShape m_overlay;
 };
 
 #endif // SELECTSLOTSTATE_HPP
