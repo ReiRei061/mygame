@@ -17,8 +17,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(json)
 
-# 1. RUTA DE SFML
-set(SFML_DIR "C:/SFML-2.6.1/lib/cmake/SFML")
+# 1. RUTA DE SFML (Ubicación local dentro del repositorio)
+set(SFML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/libs/SFML-2.6.1/lib/cmake/SFML")
 
 # 2. Buscar los componentes de SFML
 find_package(SFML 2.6 COMPONENTS graphics window system audio REQUIRED)

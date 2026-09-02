@@ -67,3 +67,7 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+# Documentación y ejemplos pesados de librerías locales
+libs/SFML-2.6.1/doc/
+libs/SFML-2.6.1/examples/
