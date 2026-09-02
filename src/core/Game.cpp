@@ -25,13 +25,17 @@ Game::Game()
 
 void Game::run() {
     // Aplicar transiciones pendientes iniciales
-    m_stateManager.update(0.0f);
+    m_stateManager.processPendingChanges();
     
     while (m_window.isOpen() && !m_stateManager.isEmpty()) {
         float dt = m_clock.restart().asSeconds();
 
         processEvents();
         update(dt);
+        
+        // --- APLICAR TRANSICIONES DE ESTADO SEGUURAS AQUÍ ---
+        m_stateManager.processPendingChanges();
+
         render();
     }
 }
@@ -103,6 +107,9 @@ void Game::update(float dt) {
 
 void Game::render() {
     m_window.clear(sf::Color::Black);
+
+    // Aseguramos que se dibuje bajo el viewport configurado
+    m_window.setView(m_gameView);
 
     m_stateManager.render(m_window);
 

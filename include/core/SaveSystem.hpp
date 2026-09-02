@@ -13,6 +13,7 @@ using json = nlohmann::json;
 struct SaveData {
     int slotId{ 1 };
     std::string difficulty{ "Normal" };
+    std::string currentMap = "map01";
     float playerX{ 400.0f };
     float playerY{ 300.0f };
     // Aquí agregaremos el inventario más adelante
@@ -32,6 +33,7 @@ public:
         std::string filename = "saves/slot_" + std::to_string(slotIndex) + ".json";
         
         json j;
+        j["current_map"] = data.currentMap;
         j["slot_id"] = slotIndex;
         j["difficulty"] = data.difficulty;
         j["player_x"] = data.playerX;
@@ -54,6 +56,7 @@ public:
         file >> j;
 
         outData.slotId = slotIndex;
+        outData.currentMap = j.value("current_map", "map01");
         outData.difficulty = j.value("difficulty", "Normal");
         outData.playerX = j.value("player_x", 400.0f);
         outData.playerY = j.value("player_y", 300.0f);

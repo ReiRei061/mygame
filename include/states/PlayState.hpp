@@ -1,15 +1,24 @@
-#ifndef PLAY_STATE_HPP
-#define PLAY_STATE_HPP
+#ifndef PLAYSTATE_HPP
+#define PLAYSTATE_HPP
 
-#include "states/State.hpp"
-#include "states/StateManager.hpp"
-#include "core/FontManager.hpp"
-#include "core/SaveSystem.hpp"
-#include <SFML/Graphics/Text.hpp>
+#include "State.hpp"
+#include "StateManager.hpp"
+#include "TextureManager.hpp"
+#include "FontManager.hpp"
+#include "AudioManager.hpp"
+#include "core/MapManager.hpp"
+#include "entities/Player.hpp"
+#include "entities/Portal.hpp"
+#include <SFML/Graphics.hpp>
+#include <vector>
+#include <string>
 
 class PlayState : public State {
 public:
-    PlayState(StateManager& stateManager, FontManager& fontManager, const SaveData& saveData);
+    PlayState(StateManager& stateManager, TextureManager& textureManager, 
+              FontManager& fontManager, AudioManager& audioManager, sf::RenderWindow& window,
+              const std::string& slotName, const std::string& difficulty);
+    ~PlayState() override = default;
 
     void handleInput(const sf::Event& event, const sf::RenderWindow& window) override;
     void update(float dt) override;
@@ -17,11 +26,21 @@ public:
 
 private:
     StateManager& m_stateManager;
+    TextureManager& m_textureManager;
     FontManager& m_fontManager;
-    SaveData m_saveData;
+    AudioManager& m_audioManager;
+    sf::RenderWindow& m_window;
 
-    sf::Text m_infoText;
-    sf::Text m_instructionText;
+    std::string m_difficulty;
+    std::string m_slotName;
+
+    MapManager m_mapManager;
+    Player m_player;
+    std::vector<Portal> m_portals;
+
+    void checkScreenTransitions();
+    void checkPortalCollisions();
+    void setupPortalsForCurrentMap();
 };
 
-#endif
+#endif // PLAYSTATE_HPP

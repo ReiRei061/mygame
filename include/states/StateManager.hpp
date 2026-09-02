@@ -1,41 +1,34 @@
 #ifndef STATEMANAGER_HPP
 #define STATEMANAGER_HPP
 
-#include <memory>
-#include <stack>
-#include <SFML/Graphics.hpp>
 #include "State.hpp"
+#include <stack>
+#include <memory>
 
 class StateManager {
 public:
     StateManager() = default;
-    ~StateManager() = default;
 
-    // Deshabilitar copias
-    StateManager(const StateManager&) = delete;
-    StateManager& operator=(const StateManager&) = delete;
-
-    // Control de estados
-    void changeState(std::unique_ptr<State> newState);
-    void pushState(std::unique_ptr<State> newState);
+    void pushState(std::unique_ptr<State> state);
     void popState();
+    void changeState(std::unique_ptr<State> state);
+    void clearStates(); // Solicita la limpieza diferida
 
-    // Métodos de ciclo de vida
+    void processPendingChanges(); // Se ejecuta al final de update()
+
     void handleInput(const sf::Event& event, const sf::RenderWindow& window);
     void update(float dt);
     void render(sf::RenderWindow& window);
 
-    bool isEmpty() const;
+    bool isEmpty() const { return m_states.empty(); }
 
 private:
     std::stack<std::unique_ptr<State>> m_states;
     
-    // Gestión diferida de estados
-    std::unique_ptr<State> m_pendingState;
-    enum class PendingAction { None, Push, Pop, Change };
-    PendingAction m_pendingAction{ PendingAction::None };
-
-    void applyPendingChanges();
+    // Variables para cambios diferidos
+    bool m_clearRequested{ false };
+    std::unique_ptr<State> m_pendingState{ nullptr };
+    bool m_popRequested{ false };
 };
 
 #endif // STATEMANAGER_HPP

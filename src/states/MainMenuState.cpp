@@ -45,10 +45,11 @@ void MainMenuState::initUI() {
         sf::Vector2f(300.0f, 240.0f), sf::Vector2f(200.0f, 50.0f),
         font, "JUGAR", 22,
         [this]() {
-            m_stateManager.pushState(std::make_unique<SelectSlotState>(m_stateManager, m_textureManager, m_fontManager));
+            m_stateManager.pushState(std::make_unique<SelectSlotState>(
+                m_stateManager, m_textureManager, m_fontManager, m_audioManager, m_window
+            ));
         }
     ));
-
     // Botón: OPCIONES (Apila el nuevo OptionsMenuState)
     m_buttons.push_back(std::make_unique<Button>(
         sf::Vector2f(300.0f, 310.0f), sf::Vector2f(200.0f, 50.0f),
